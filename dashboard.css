@@ -22,6 +22,35 @@ body {
 
 .wrap { width: min(1240px, 96vw); margin: 1.5rem auto 3rem; }
 
+/* Top-level tabs */
+.tabs {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  margin-bottom: .65rem;
+}
+.tab-btn {
+  cursor: pointer;
+  border: 1px solid var(--card-border);
+  background: #101a34;
+  color: #9fb0dd;
+  border-radius: 999px;
+  padding: .35rem .75rem;
+  font-size: .8rem;
+  font-family: inherit;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.tab-btn:hover {
+  background: #1a2d55;
+  color: #d8e7ff;
+}
+.tab-btn.is-active {
+  background: #1f3b73;
+  color: var(--ink);
+  border-color: #3964b2;
+}
+.tab-panel[hidden] { display: none !important; }
+
 /* Header */
 .top { display: flex; justify-content: space-between; align-items: end; gap: 1rem; margin-bottom: .5rem; }
 h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
@@ -214,6 +243,29 @@ table.mt { margin-top: .75rem; }
 .calendar-table th, .calendar-table td { padding: .3rem .25rem; text-align: center; white-space: nowrap; }
 .calendar-table th:first-child, .calendar-table .cal-year { text-align: left; font-weight: 600; }
 .cal-cell { font-variant-numeric: tabular-nums; font-weight: 600; }
+
+/* Historical sheet */
+.sheet-wrap {
+  max-height: 72vh;
+  overflow: auto;
+}
+.sheet-table {
+  min-width: 980px;
+}
+.sheet-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+  margin: .2rem 0 .65rem;
+}
+.sheet-meta-item {
+  font-size: .76rem;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--card-border);
+  border-radius: .35rem;
+  padding: .2rem .45rem;
+}
 
 /* Print / PDF export */
 @media print {

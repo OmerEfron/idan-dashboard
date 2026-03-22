@@ -1,0 +1,80 @@
+/* Historical dashboard styles */
+
+.hist-top { margin-bottom: .25rem; }
+
+.hist-filters {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  flex-wrap: wrap;
+}
+
+.hist-select, .hist-search {
+  font-family: inherit;
+  font-size: .8rem;
+  color: var(--ink);
+  background: #101a34;
+  border: 1px solid var(--card-border);
+  border-radius: .45rem;
+  padding: .35rem .6rem;
+  outline: none;
+  transition: border-color .2s;
+}
+.hist-select:focus, .hist-search:focus { border-color: var(--accent); }
+.hist-search { min-width: 150px; }
+.hist-search::placeholder { color: #5a6e9e; }
+
+.hist-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+
+.hist-table-controls {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.hist-count {
+  font-size: .78rem;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--card-border);
+  border-radius: .35rem;
+  padding: .2rem .5rem;
+}
+
+.hist-action-badge {
+  display: inline-block;
+  font-size: .72rem;
+  font-weight: 600;
+  padding: .15rem .45rem;
+  border-radius: .3rem;
+  white-space: nowrap;
+}
+.hist-action-badge.hist-buy { background: rgba(93, 211, 158, .15); color: #5dd39e; }
+.hist-action-badge.hist-sell { background: rgba(255, 124, 143, .15); color: #ff7c8f; }
+.hist-action-badge.hist-div { background: rgba(85, 214, 255, .15); color: #55d6ff; }
+
+tr.hist-buy td { border-left: 2px solid rgba(93, 211, 158, .3); }
+tr.hist-sell td { border-left: 2px solid rgba(255, 124, 143, .3); }
+tr.hist-div td { border-left: 2px solid rgba(85, 214, 255, .3); }
+tr.hist-buy td:first-child { border-left: 3px solid #5dd39e; }
+tr.hist-sell td:first-child { border-left: 3px solid #ff7c8f; }
+tr.hist-div td:first-child { border-left: 3px solid #55d6ff; }
+
+.hist-name {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hist-table th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
