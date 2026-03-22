@@ -10,11 +10,11 @@ function renderCalendarReturns(model) {
   }
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const { byYear, years } = matrix;
-  let html = '<table class="calendar-table"><thead><tr><th>Year</th>';
+  let html = `<table class="calendar-table"><thead><tr><th>${termHtml("table.year", "Year")}</th>`;
   months.forEach((m) => {
     html += `<th>${m}</th>`;
   });
-  html += "<th>Yr Avg</th></tr></thead><tbody>";
+  html += `<th>${termHtml("table.yearlyAverage", "Yr Avg")}</th></tr></thead><tbody>`;
   years.forEach((y) => {
     const row = byYear[y];
     const vals = [];

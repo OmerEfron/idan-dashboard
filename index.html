@@ -29,18 +29,18 @@
 
     <!-- Cumulative Performance vs Benchmarks (main chart) -->
     <section class="card">
-      <h2>Cumulative Performance vs Benchmarks</h2>
+      <h2 data-term="section.cumulativeVsBenchmarks">Cumulative Performance vs Benchmarks</h2>
       <div class="chart-lg"><canvas id="cumulChart"></canvas></div>
     </section>
 
     <!-- NAV + Allocation side-by-side -->
     <section class="grid two">
       <article class="card">
-        <h2>NAV &amp; Asset Allocation Over Time</h2>
+        <h2 data-term="section.navAndAllocation">NAV &amp; Asset Allocation Over Time</h2>
         <div class="chart-md"><canvas id="navChart"></canvas></div>
       </article>
       <article class="card">
-        <h2>Current Allocation</h2>
+        <h2 data-term="section.currentAllocation">Current Allocation</h2>
         <div class="chart-donut"><canvas id="allocDonut"></canvas></div>
         <div id="allocLegend" class="alloc-legend"></div>
       </article>
@@ -48,48 +48,48 @@
 
     <!-- Monthly Returns Heatmap -->
     <section class="card">
-      <h2>Monthly Returns</h2>
+      <h2 data-term="section.monthlyReturns">Monthly Returns</h2>
       <div id="monthlyReturns" class="monthly-grid"></div>
     </section>
 
     <!-- Performance by Symbol -->
     <section class="card">
-      <h2>Performance by Symbol — Contribution to Return</h2>
+      <h2 data-term="section.symbolContribution">Performance by Symbol — Contribution to Return</h2>
       <div class="chart-symbol"><canvas id="symbolChart"></canvas></div>
     </section>
 
     <!-- Sector Attribution + Risk Measures -->
     <section class="grid two">
       <article class="card">
-        <h2>Sector Attribution vs S&amp;P 500</h2>
+        <h2 data-term="section.sectorAttribution">Sector Attribution vs S&amp;P 500</h2>
         <div class="chart-md"><canvas id="sectorChart"></canvas></div>
       </article>
       <article class="card">
-        <h2>Risk Measures</h2>
+        <h2 data-term="section.riskMeasures">Risk Measures</h2>
         <div class="table-wrap" id="riskTable"></div>
       </article>
     </section>
 
     <!-- Trade Summary -->
     <section class="card">
-      <h2>Trade Summary — Realized P&amp;L</h2>
+      <h2 data-term="section.tradeSummary">Trade Summary — Realized P&amp;L</h2>
       <div class="table-wrap" id="tradeTable"></div>
     </section>
 
     <!-- Open Positions -->
     <section class="card">
-      <h2>Open Positions</h2>
+      <h2 data-term="section.openPositions">Open Positions</h2>
       <div class="table-wrap" id="positionsTable"></div>
     </section>
 
     <!-- ESG + Projected Income side-by-side -->
     <section class="grid two">
       <article class="card">
-        <h2>ESG Ratings</h2>
+        <h2 data-term="section.esgRatings">ESG Ratings</h2>
         <div id="esgSection"></div>
       </article>
       <article class="card">
-        <h2>Projected Income</h2>
+        <h2 data-term="section.projectedIncome">Projected Income</h2>
         <div class="table-wrap" id="incomeTable"></div>
       </article>
     </section>
@@ -97,8 +97,13 @@
 
   <script src="./js/parse.js"></script>
   <script src="./js/utils.js"></script>
+  <script src="./js/terminology.js"></script>
+  <script src="./js/analytics.js"></script>
   <script src="./js/charts.js"></script>
+  <script src="./js/charts-ext.js"></script>
   <script src="./js/sections.js"></script>
+  <script src="./js/sections-tables.js"></script>
+  <script src="./js/sections-calendar.js"></script>
   <script defer src="./dashboard.js"></script>
 </body>
 </html>

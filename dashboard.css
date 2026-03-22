@@ -28,6 +28,59 @@ h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
 h2 { font-size: .95rem; font-weight: 600; color: #b0c4f5; margin-bottom: .6rem; }
 .sub { color: var(--muted); font-size: .85rem; margin-top: .25rem; }
 
+/* Beginner term tooltips */
+.term-label { display: inline; }
+.term-tip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  margin-left: .35rem;
+  border-radius: 999px;
+  border: 1px solid #36549b;
+  background: #182852;
+  color: #b8c8f1;
+  font-size: .65rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: help;
+  position: relative;
+  vertical-align: text-top;
+}
+.term-tip:hover,
+.term-tip:focus-visible {
+  background: #233a73;
+  color: #e8eeff;
+  outline: none;
+}
+.term-tip::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translateX(-50%);
+  width: min(280px, 70vw);
+  padding: .45rem .55rem;
+  border-radius: .45rem;
+  border: 1px solid #2b457d;
+  background: #101a35;
+  color: #d8e4ff;
+  font-size: .72rem;
+  line-height: 1.35;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 20;
+}
+.term-tip:hover::after,
+.term-tip:focus-visible::after {
+  opacity: 1;
+}
+
 .file-box { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; flex-shrink: 0; }
 #csvInput { display: none; }
 .btn {

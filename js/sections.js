@@ -20,30 +20,59 @@ function renderHeroKpis(model) {
   const stdDev = riskVal("Standard Deviation:");
 
   const cards = [
-    { label: "Ending NAV", value: fmtUsd(end), cls: "", spark: "sparkNav" },
-    { label: "Cumulative Return", value: fmtPct(cum), cls: signCls(cum), spark: "sparkCumul" },
+    { termKey: "kpi.endingNav", label: "Ending NAV", value: fmtUsd(end), cls: "", spark: "sparkNav" },
     {
+      termKey: "kpi.cumulativeReturn",
+      label: "Cumulative Return",
+      value: fmtPct(cum),
+      cls: signCls(cum),
+      spark: "sparkCumul",
+    },
+    {
+      termKey: "kpi.maxDrawdown",
       label: "Max Drawdown",
       value: maxDD != null ? fmtPct(-maxDD) : "—",
       cls: "neg",
       spark: "sparkDrawdown",
     },
-    { label: "Sharpe Ratio", value: sharpe != null ? sharpe.toFixed(2) : "—", cls: signCls(sharpe) },
-    { label: "Sortino Ratio", value: sortino != null ? sortino.toFixed(2) : "—", cls: signCls(sortino) },
-    { label: "Std Deviation", value: stdDev != null ? fmtPct(stdDev) : "—", cls: "" },
-    { label: "Best Day", value: fmtPct(best), cls: "pos", sub: s.BestReturnDate ? parseDate(s.BestReturnDate) : "" },
-    { label: "Worst Day", value: fmtPct(worst), cls: "neg", sub: s.WorstReturnDate ? parseDate(s.WorstReturnDate) : "" },
-    { label: "Change in NAV", value: fmtUsd(ch), cls: signCls(ch) },
-    { label: "MTM (Mark-to-Market)", value: fmtUsd(mtm), cls: signCls(mtm) },
-    { label: "Fees & Commissions", value: fmtUsd(fees), cls: "neg" },
-    { label: "Beginning NAV", value: fmtUsd(begin), cls: "" },
+    {
+      termKey: "kpi.sharpeRatio",
+      label: "Sharpe Ratio",
+      value: sharpe != null ? sharpe.toFixed(2) : "—",
+      cls: signCls(sharpe),
+    },
+    {
+      termKey: "kpi.sortinoRatio",
+      label: "Sortino Ratio",
+      value: sortino != null ? sortino.toFixed(2) : "—",
+      cls: signCls(sortino),
+    },
+    { termKey: "kpi.stdDeviation", label: "Std Deviation", value: stdDev != null ? fmtPct(stdDev) : "—", cls: "" },
+    {
+      termKey: "kpi.bestDay",
+      label: "Best Day",
+      value: fmtPct(best),
+      cls: "pos",
+      sub: s.BestReturnDate ? parseDate(s.BestReturnDate) : "",
+    },
+    {
+      termKey: "kpi.worstDay",
+      label: "Worst Day",
+      value: fmtPct(worst),
+      cls: "neg",
+      sub: s.WorstReturnDate ? parseDate(s.WorstReturnDate) : "",
+    },
+    { termKey: "kpi.changeNav", label: "Change in NAV", value: fmtUsd(ch), cls: signCls(ch) },
+    { termKey: "kpi.mtm", label: "MTM (Mark-to-Market)", value: fmtUsd(mtm), cls: signCls(mtm) },
+    { termKey: "kpi.fees", label: "Fees & Commissions", value: fmtUsd(fees), cls: "neg" },
+    { termKey: "kpi.beginningNav", label: "Beginning NAV", value: fmtUsd(begin), cls: "" },
   ];
 
   $("#heroKpis").innerHTML = cards
     .map(
       (c) => `
     <article class="kpi ${c.cls}">
-      <span class="kpi-label">${c.label}</span>
+      <span class="kpi-label">${termHtml(c.termKey, c.label)}</span>
       <span class="kpi-value ${c.cls}">${c.value}</span>
       ${c.sub ? `<span class="kpi-sub">${c.sub}</span>` : ""}
       ${
@@ -95,7 +124,11 @@ function renderMonthlyReturns(model) {
   if (!valid.length) { el.innerHTML = "<p class='muted'>No monthly data.</p>"; return; }
 
   el.innerHTML = `<div class="month-row month-header">
-    <span>Month</span><span>Account</span><span>SPXTR</span><span>EFA</span><span>VT</span>
+    <span>${termHtml("table.month", "Month")}</span>
+    <span>${termHtml("table.account", "Account")}</span>
+    <span>${benchmarkHtml("SPXTR")}</span>
+    <span>${benchmarkHtml("EFA")}</span>
+    <span>${benchmarkHtml("VT")}</span>
   </div>` + valid.map((r) => {
     const acct = num(r.AccountReturn);
     const bm1 = num(r.BM1Return);
@@ -127,12 +160,16 @@ function renderRiskTable(model) {
   const relMetrics = relRows.filter((r) => r["Risk Measure Relative to Benchmark"]);
 
   const html = `<table class="table-zebra"><thead><tr>
-    <th>Metric</th><th class="r">Account</th><th class="r">SPXTR</th><th class="r">EFA</th><th class="r">VT</th>
+    <th>${termHtml("table.metric", "Metric")}</th>
+    <th class="r">${termHtml("table.account", "Account")}</th>
+    <th class="r">${benchmarkHtml("SPXTR")}</th>
+    <th class="r">${benchmarkHtml("EFA")}</th>
+    <th class="r">${benchmarkHtml("VT")}</th>
   </tr></thead><tbody>
   ${mainMetrics.map((r) => {
     const metric = r["Risk Measure"];
     return `<tr>
-      <td>${metric}</td>
+      <td>${riskMetricHtml(metric)}</td>
       <td class="mono r">${fmtRiskVal(r["Account Value"])}</td>
       <td class="mono r">${fmtRiskVal(r["BM1 Value"])}</td>
       <td class="mono r">${fmtRiskVal(r["BM2 Value"])}</td>
@@ -142,10 +179,13 @@ function renderRiskTable(model) {
   </tbody></table>`;
 
   const relHtml = relMetrics.length ? `<table class="mt table-zebra"><thead><tr>
-    <th>Relative Metric</th><th class="r">vs SPXTR</th><th class="r">vs EFA</th><th class="r">vs VT</th>
+    <th>${termHtml("table.relativeMetric", "Relative Metric")}</th>
+    <th class="r">${termHtml("table.vs", "vs")} ${benchmarkHtml("SPXTR")}</th>
+    <th class="r">${termHtml("table.vs", "vs")} ${benchmarkHtml("EFA")}</th>
+    <th class="r">${termHtml("table.vs", "vs")} ${benchmarkHtml("VT")}</th>
   </tr></thead><tbody>
   ${relMetrics.map((r) => `<tr>
-    <td>${r["Risk Measure Relative to Benchmark"]}</td>
+    <td>${riskMetricHtml(r["Risk Measure Relative to Benchmark"])}</td>
     <td class="mono r">${fmtRiskVal(r["BM1 Value"])}</td>
     <td class="mono r">${fmtRiskVal(r["BM2 Value"])}</td>
     <td class="mono r">${fmtRiskVal(r["BM3 Value"])}</td>
@@ -193,8 +233,12 @@ function renderIncome(model) {
 
   const totalRow = rows.find((r) => r.Symbol === "Total");
   el.innerHTML = `<table class="table-zebra"><thead><tr>
-    <th>Symbol</th><th>Frequency</th><th class="r">Qty</th>
-    <th class="r">Yield %</th><th class="r">Est. Annual</th><th class="r">Est. Remaining</th>
+    <th>${termHtml("table.symbol", "Symbol")}</th>
+    <th>${termHtml("table.frequency", "Frequency")}</th>
+    <th class="r">${termHtml("table.qty", "Qty")}</th>
+    <th class="r">${termHtml("table.yieldPct", "Yield %")}</th>
+    <th class="r">${termHtml("table.estimatedAnnualIncome", "Est. Annual")}</th>
+    <th class="r">${termHtml("table.estimatedRemainingIncome", "Est. Remaining")}</th>
   </tr></thead><tbody>
   ${items.map((r) => `<tr>
     <td><strong>${r.Symbol}</strong></td>

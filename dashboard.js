@@ -1,6 +1,7 @@
 /* Dashboard entry point — file loading and render orchestration */
 
 const statusEl = $("#status");
+applyStaticTerminology();
 
 $("#csvInput").addEventListener("change", async (e) => {
   const file = e.target.files?.[0];
@@ -33,6 +34,14 @@ function setStatus(msg) {
   statusEl.textContent = msg;
 }
 
+function applyStaticTerminology() {
+  document.querySelectorAll("[data-term]").forEach((el) => {
+    const key = el.getAttribute("data-term");
+    if (!key) return;
+    el.innerHTML = termHtml(key, el.textContent.trim());
+  });
+}
+
 function resetSectionAnimations() {
   document.querySelectorAll(".animate-section").forEach((el) => {
     el.classList.remove("is-visible");
@@ -62,22 +71,31 @@ function renderDashboard(text, sourceName) {
     $("#periodLabel").textContent = `${info.Name || "Account"} — ${period || info.AnalysisPeriod || ""}`;
   }
 
-  renderHeroKpis(model);
-  renderCumulativeChart(model);
-  renderDrawdownChart(model);
-  renderNavChart(model);
-  renderAllocDonut(model);
-  renderRollingChart(model, 20);
-  renderConcentrationChart(model);
-  renderMonthlyReturns(model);
-  renderCalendarReturns(model);
-  renderSymbolChart(model);
-  renderSectorChart(model);
-  renderRiskTable(model);
-  renderTradeTable(model);
-  renderPositions(model);
-  renderEsg(model);
-  renderIncome(model);
-  renderKpiSparklines(model);
+  callRenderer("renderHeroKpis", model);
+  callRenderer("renderCumulativeChart", model);
+  callRenderer("renderDrawdownChart", model);
+  callRenderer("renderNavChart", model);
+  callRenderer("renderAllocDonut", model);
+  callRenderer("renderRollingChart", model, 20);
+  callRenderer("renderConcentrationChart", model);
+  callRenderer("renderMonthlyReturns", model);
+  callRenderer("renderCalendarReturns", model);
+  callRenderer("renderSymbolChart", model);
+  callRenderer("renderSectorChart", model);
+  callRenderer("renderRiskTable", model);
+  callRenderer("renderTradeTable", model);
+  callRenderer("renderPositions", model);
+  callRenderer("renderEsg", model);
+  callRenderer("renderIncome", model);
+  callRenderer("renderKpiSparklines", model);
   triggerSectionAnimations();
+}
+
+function callRenderer(name, ...args) {
+  const fn = window[name];
+  if (typeof fn !== "function") {
+    console.warn(`Renderer "${name}" is not available.`);
+    return;
+  }
+  fn(...args);
 }

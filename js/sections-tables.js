@@ -38,10 +38,16 @@ function renderTradeTable(model) {
   });
 
   el.innerHTML = `<table class="table-zebra"><thead><tr>
-    <th>Symbol</th><th>Description</th><th>Sector</th>
-    <th class="r">Qty Bought</th><th class="r">Avg Buy</th><th class="r">Cost</th>
-    <th class="r">Qty Sold</th><th class="r">Avg Sell</th><th class="r">Proceeds</th>
-    <th class="r">Net P&L</th>
+    <th>${termHtml("table.symbol", "Symbol")}</th>
+    <th>${termHtml("table.description", "Description")}</th>
+    <th>${termHtml("table.sector", "Sector")}</th>
+    <th class="r">${termHtml("table.qtyBought", "Qty Bought")}</th>
+    <th class="r">${termHtml("table.avgBuyPrice", "Avg Buy")}</th>
+    <th class="r">${termHtml("table.totalBuyCost", "Cost")}</th>
+    <th class="r">${termHtml("table.qtySold", "Qty Sold")}</th>
+    <th class="r">${termHtml("table.avgSellPrice", "Avg Sell")}</th>
+    <th class="r">${termHtml("table.saleProceeds", "Proceeds")}</th>
+    <th class="r">${termHtml("table.netRealizedPL", "Net P&L")}</th>
   </tr></thead><tbody>
   ${lines
     .map(({ r, buyProc, sellProc, qtyBought, qtySold, net }) => {
@@ -86,10 +92,16 @@ function renderPositions(model) {
   const totalNav = positions.reduce((s, p) => s + (num(p.Value) || 0), 0) || 1;
 
   el.innerHTML = `<table class="table-zebra"><thead><tr>
-    <th>Symbol</th><th>Description</th><th>Sector</th>
-    <th class="r">Qty</th><th class="r">Price</th><th class="r">Value</th>
-    <th class="r">Cost Basis</th><th class="r">Unrealized P&L</th><th class="r">% Unreal.</th>
-    <th class="r">% Portfolio</th>
+    <th>${termHtml("table.symbol", "Symbol")}</th>
+    <th>${termHtml("table.description", "Description")}</th>
+    <th>${termHtml("table.sector", "Sector")}</th>
+    <th class="r">${termHtml("table.qty", "Qty")}</th>
+    <th class="r">${termHtml("table.marketPrice", "Price")}</th>
+    <th class="r">${termHtml("table.marketValue", "Value")}</th>
+    <th class="r">${termHtml("table.costBasis", "Cost Basis")}</th>
+    <th class="r">${termHtml("table.unrealizedPL", "Unrealized P&L")}</th>
+    <th class="r">${termHtml("table.unrealizedPct", "% Unreal.")}</th>
+    <th class="r">${termHtml("table.portfolioWeight", "% Portfolio")}</th>
   </tr></thead><tbody>
   ${positions
     .map((r) => {
