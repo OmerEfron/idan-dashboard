@@ -1,12 +1,136 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="refresh" content="0;url=dashboard.html" />
-  <link rel="canonical" href="dashboard.html" />
-  <title>Redirecting…</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio Analytics — Idan Rosen</title>
+  <link rel="stylesheet" href="./dashboard.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <p><a href="dashboard.html">Open dashboard</a> if you are not redirected.</p>
+  <main class="wrap">
+    <header class="top">
+      <div>
+        <h1>Portfolio Analytics</h1>
+        <p class="sub" id="periodLabel">Interactive Brokers — PortfolioAnalyst</p>
+      </div>
+      <div class="file-box no-print">
+        <button type="button" id="btnPrintPdf" class="btn btn-secondary">Export PDF</button>
+        <label for="csvInput" class="btn">Choose CSV</label>
+        <input id="csvInput" type="file" accept=".csv,text/csv" />
+        <span id="status" class="status">Waiting for file...</span>
+      </div>
+    </header>
+
+    <!-- Hero KPIs -->
+    <section class="card animate-section" id="heroSection">
+      <div id="heroKpis" class="grid hero-kpis"></div>
+      <div id="insights" class="insights"></div>
+    </section>
+
+    <!-- Cumulative Performance vs Benchmarks (main chart) -->
+    <section class="card animate-section">
+      <h2>Cumulative Performance vs Benchmarks</h2>
+      <div class="chart-lg"><canvas id="cumulChart"></canvas></div>
+    </section>
+
+    <!-- Drawdown -->
+    <section class="card animate-section">
+      <h2>Drawdown from Peak (Account)</h2>
+      <div class="chart-md"><canvas id="drawdownChart"></canvas></div>
+      <p id="drawdownSummary" class="drawdown-summary"></p>
+    </section>
+
+    <!-- NAV + Allocation side-by-side -->
+    <section class="grid two animate-section">
+      <article class="card">
+        <h2>NAV &amp; Asset Allocation Over Time</h2>
+        <div class="chart-md"><canvas id="navChart"></canvas></div>
+      </article>
+      <article class="card">
+        <h2>Current Allocation</h2>
+        <div class="chart-donut"><canvas id="allocDonut"></canvas></div>
+        <div id="allocLegend" class="alloc-legend"></div>
+      </article>
+    </section>
+
+    <!-- Rolling returns + Concentration -->
+    <section class="grid two animate-section">
+      <article class="card">
+        <h2>Rolling 20-Day Return (Account)</h2>
+        <div class="chart-md"><canvas id="rollingChart"></canvas></div>
+      </article>
+      <article class="card">
+        <h2>Concentration Risk</h2>
+        <div id="concentrationKpis" class="conc-kpis"></div>
+        <div class="chart-md"><canvas id="concentrationChart"></canvas></div>
+        <div id="concentrationLegend" class="conc-legend"></div>
+      </article>
+    </section>
+
+    <!-- Monthly Returns Heatmap -->
+    <section class="card animate-section">
+      <h2>Monthly Returns</h2>
+      <div id="monthlyReturns" class="monthly-grid"></div>
+    </section>
+
+    <!-- Calendar year grid -->
+    <section class="card animate-section">
+      <h2>Calendar Returns by Year (Account)</h2>
+      <div id="calendarReturns" class="calendar-wrap"></div>
+    </section>
+
+    <!-- Performance by Symbol -->
+    <section class="card animate-section">
+      <h2>Performance by Symbol — Contribution to Return</h2>
+      <div class="chart-symbol"><canvas id="symbolChart"></canvas></div>
+    </section>
+
+    <!-- Sector Attribution + Risk Measures -->
+    <section class="grid two animate-section">
+      <article class="card">
+        <h2>Sector Attribution vs S&amp;P 500</h2>
+        <div class="chart-md"><canvas id="sectorChart"></canvas></div>
+      </article>
+      <article class="card">
+        <h2>Risk Measures</h2>
+        <div class="table-wrap" id="riskTable"></div>
+      </article>
+    </section>
+
+    <!-- Trade Summary -->
+    <section class="card animate-section">
+      <h2>Trade Summary — Realized P&amp;L</h2>
+      <div class="table-wrap" id="tradeTable"></div>
+    </section>
+
+    <!-- Open Positions -->
+    <section class="card animate-section">
+      <h2>Open Positions</h2>
+      <div class="table-wrap" id="positionsTable"></div>
+    </section>
+
+    <!-- ESG + Projected Income side-by-side -->
+    <section class="grid two animate-section">
+      <article class="card">
+        <h2>ESG Ratings</h2>
+        <div id="esgSection"></div>
+      </article>
+      <article class="card">
+        <h2>Projected Income</h2>
+        <div class="table-wrap" id="incomeTable"></div>
+      </article>
+    </section>
+  </main>
+
+  <script src="./js/parse.js"></script>
+  <script src="./js/utils.js"></script>
+  <script src="./js/analytics.js"></script>
+  <script src="./js/charts.js"></script>
+  <script src="./js/charts-ext.js"></script>
+  <script src="./js/sections.js"></script>
+  <script src="./js/sections-tables.js"></script>
+  <script src="./js/sections-calendar.js"></script>
+  <script defer src="./dashboard.js"></script>
 </body>
 </html>
